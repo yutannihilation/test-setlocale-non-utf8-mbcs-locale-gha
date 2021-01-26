@@ -16,8 +16,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          install.packages("remotes")
-          remotes::install_cran("cpp11")
+          install.packages(c("cpp11", "brio", "callr", "cli", "decor", "desc", "glue", "tibble", "vctrs"))
         shell: Rscript {0}
 
       - name: Test
