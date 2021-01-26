@@ -11,9 +11,23 @@ jobs:
     name: windows-latest
     steps:
       - uses: actions/checkout@v2
-        
-      - name: compile and execute
-        run: |
-          g++ main.cpp -o a.exe
-          Measure-Command { ./a.exe C }
-          Measure-Command { ./a.exe Japanese }
+
+      - uses: r-lib/actions/setup-r@master
+      
+      - run: |
+          install.packages("cpp11", dependencies = TRUE)
+          cpp11::cpp_source(
+            code = 
+              '#include <regex>
+          [[cpp11::register]]
+          void foo() {
+            std::regex reg("[0-9]");
+          }
+          ')
+          # works
+          Sys.setlocale("LC_COLLATE", 'English')
+          system.time(foo())
+          # freezes
+          Sys.setlocale("LC_COLLATE", 'Japanese')
+          system.time(foo())
+        shell: Rscript {0}
