@@ -11,6 +11,6 @@ jobs:
     name: windows-latest
     steps:
       - run: |
-        g++ main.cpp -o a.exe
-        time ./a.exe C
-        time ./a.exe Japanese
+          g++ main.cpp -o a.exe
+          time ./a.exe C
+          time ./a.exe Japanese
