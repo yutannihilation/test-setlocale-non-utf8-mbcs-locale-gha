@@ -12,5 +12,5 @@ jobs:
     steps:
       - run: |
           g++ main.cpp -o a.exe
-          time ./a.exe C
-          time ./a.exe Japanese
+          Measure-Command ./a.exe C
+          Measure-Command ./a.exe Japanese
