@@ -30,4 +30,4 @@ jobs:
           # freezes
           Sys.setlocale("LC_COLLATE", 'Japanese')
           system.time(foo())
-        shell: R -e {0}
+        shell: Rscript {0}
