@@ -14,5 +14,20 @@ jobs:
 
       - uses: r-lib/actions/setup-r@master
       
-      - run: Sys.setlocale("LC_COLLATE", "Japanese")
-        shell: Rscript {0}
+      - run: |
+          install.packages("cpp11")
+          cpp11::cpp_source(
+            code = 
+              '#include <regex>
+          [[cpp11::register]]
+          void foo() {
+            std::regex reg("[0-9]");
+          }
+          ')
+          # works
+          Sys.setlocale("LC_COLLATE", 'English')
+          system.time(foo())
+          # freezes
+          Sys.setlocale("LC_COLLATE", 'Japanese')
+          system.time(foo())
+        shell: R -e {0}
