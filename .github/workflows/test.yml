@@ -10,7 +10,10 @@ jobs:
     runs-on: windows-latest
     name: windows-latest
     steps:
-      - run: |
+      - uses: actions/checkout@v2
+        
+      - name: compile and execute
+        run: |
           g++ main.cpp -o a.exe
           Measure-Command { ./a.exe C }
           Measure-Command { ./a.exe Japanese }
