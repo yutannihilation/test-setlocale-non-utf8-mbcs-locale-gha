@@ -14,8 +14,14 @@ jobs:
 
       - uses: r-lib/actions/setup-r@master
       
-      - run: |
-          install.packages("cpp11", dependencies = TRUE)
+      - name: Install dependencies
+        run: |
+          install.packages("remotes")
+          remotes::install_cran("cpp11")
+        shell: Rscript {0}
+
+      - name: Test
+        run: |
           cpp11::cpp_source(
             code = 
               '#include <regex>
@@ -24,10 +30,10 @@ jobs:
             std::regex reg("[0-9]");
           }
           ')
-          # works
+          cat("system.time() w/ LC_COLLATE=English \n")
           Sys.setlocale("LC_COLLATE", 'English')
           system.time(foo())
-          # freezes
+          cat("system.time() w/ LC_COLLATE=Japanese \n")
           Sys.setlocale("LC_COLLATE", 'Japanese')
           system.time(foo())
         shell: Rscript {0}
