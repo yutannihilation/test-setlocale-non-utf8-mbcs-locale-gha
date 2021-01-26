@@ -1,0 +1,18 @@
+on:
+  push:
+    branches:
+      - master
+
+name: R-CMD-check
+
+jobs:
+  R-CMD-check:
+    runs-on: windows-latest
+    name: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@master
+      
+      - run: Sys.setlocale("LC_COLLATE", "Japanese")
+        shell: Rscript {0}
